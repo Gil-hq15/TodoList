@@ -1,0 +1,112 @@
+#div-body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: 'American Typewriter', serif;
+    background: linear-gradient(27deg, #34495e 50%, #2c3e50 50%);
+}
+
+.form-body{
+    width: 400px;
+    min-width: 300px;
+    border-radius: 10px;
+    border-top-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    margin: 10px;
+    border: solid 1px #2980b9;
+}
+
+.form-body img{
+    width: 150px;
+    display: block;
+    margin: 20px auto;
+
+}
+
+.text{
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 25px;
+}
+
+.form-body input{
+    display: block;
+    margin: auto;
+    height: 40px;
+    width: 75%;
+    padding-left: 10px;
+    color: #fff;
+    border: 1px solid #fff;
+    font-family: 'American Typewriter', serif;
+    background-color: transparent;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.form-body .reg-form{
+    display: block;
+    margin: auto;
+    height: 35px;
+    width: 75%;
+    padding-left: 10px;
+    color: #fff;
+    border: 1px solid #fff;
+    font-family: 'American Typewriter', serif;
+    background-color: transparent;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.form-body input[type="password"]{
+    margin-top: 20px;
+}
+
+::placeholder{
+    font-size: 1rem;
+    color: rgba(255,255,255,0.596);
+}
+
+.form-body input:hover{
+    transition: .5s;
+    border: 1px solid #2980b9;
+    color: #2498db;
+}
+
+.form-body button{
+    display: block;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 30px;
+    height: 40px;
+    width: 78%;
+    background: transparent;
+    color: #b9c4c6;
+    border-radius: 2px;
+    cursor: pointer;
+    outline: none;
+    transition: all .5s ease;
+    border: 2px solid #2980b9;
+    font-family: 'American Typewriter', serif;
+}
+
+.form-body button:hover{
+    color: #d5dbdd;
+    border: 2px solid #3498db;
+    background: linear-gradient(#34495e, #2c3e50);
+}
+
+
+.form-body .login-form p{
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.446);
+    text-align: center;
+    padding-top: 10px;
+    margin-bottom: -10px;
+}
