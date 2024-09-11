@@ -2,7 +2,7 @@ body, html {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: 'American Typewriter', serif;
     background-color: lightblue;
 }
 
@@ -35,4 +35,13 @@ td {
 
 #content {
     width: 70%;
+}
+
+#logout {
+    position: absolute;
+    margin-left: 650px;
+    background-color: blue;
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 20px;
 }

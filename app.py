@@ -1,19 +1,24 @@
 from flask import Flask, render_template, url_for, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from dotenv import load_dotenv # type: ignore
+import os
+import pytz  # type: ignore
 
+load_dotenv()
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.secret_key = os.getenv('SECRET_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 db = SQLAlchemy(app)
-app.secret_key = '123GIL321'
+
 
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_user_id'),nullable=False)
     content = db.Column(db.String(200), nullable=False)
     priority = db.Column(db.String(50), nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow())
+    date_created = db.Column(db.DateTime, default=datetime.now(pytz.utc))
 
     def __repr__(self):
         return '<Task %r>' % self.id
@@ -36,7 +41,7 @@ def login():
             session['user_id'] = user.id
             return redirect('/index')
         else:
-            return 'Invalid username or password'
+            return render_template('login.html', error='Invalid username or password. Try again.')
     return render_template('login.html')
 
 
@@ -45,8 +50,11 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        password_Confirm = request.form['password1']
+        if password != password_Confirm:
+            return render_template('register.html', error='The passwords do not match. Please try again.')
         if User.query.filter_by(username=username).first():
-            return 'Username already exists'
+            return render_template('register.html', error='Username already exists')
         new_user = User(username=username, password=password)
         db.session.add(new_user)
         db.session.commit()
@@ -93,6 +101,7 @@ def update(id):
 
     if request.method == 'POST':
         task.content = request.form['content']
+        task.priority = request.form['priority']
 
         try:
             db.session.commit()

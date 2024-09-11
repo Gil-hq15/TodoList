@@ -10,6 +10,7 @@
     <div class="form-body">
         <img src="{{ url_for('static', filename='css/img/219983.png') }}" alt="user-login">
         <p class="text">Bienvenido a Task Master</p>
+        <p id="error">{{ error }}</p>
         <form class="login-form" action="/" method="POST">
             <input type="text" placeholder="Username" name="username" id="username">
             <input type="password" placeholder="Password" name="password" id="password">
