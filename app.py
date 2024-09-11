@@ -1,19 +1,19 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
-
-
-
-
+app.secret_key = '123GIL321'
 
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_user_id'),nullable=False)
     content = db.Column(db.String(200), nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    priority = db.Column(db.String(50), nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow())
 
     def __repr__(self):
         return '<Task %r>' % self.id
@@ -33,6 +33,7 @@ def login():
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
         if user and user.password == password:
+            session['user_id'] = user.id
             return redirect('/index')
         else:
             return 'Invalid username or password'
@@ -55,9 +56,13 @@ def register():
 
 @app.route('/index', methods=['POST', 'GET'])
 def index():
+    if 'user_id' not in session:
+        return redirect('/')
+    
     if request.method == 'POST':
         task_content = request.form['content']
-        new_task = Todo(content=task_content)
+        task_priority = request.form['priority']
+        new_task = Todo(content=task_content, priority=task_priority, user_id=session['user_id'])
 
         try:
             db.session.add(new_task)
@@ -67,7 +72,7 @@ def index():
             return 'There was an issue adding your task'
 
     else:
-        tasks = Todo.query.order_by(Todo.date_created).all()
+        tasks = Todo.query.filter_by(user_id=session['user_id']).order_by(Todo.date_created).all()
         return render_template('index.html', tasks=tasks)
 
 
