@@ -22,12 +22,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Set up test database
-        run: |
-          export FLASK_APP=app
-          export FLASK_ENV=testing
-          flask db upgrade
-
       - name: Run tests
         run: |
           pytest --tb=short --disable-warnings --cov=app --cov-report=html
