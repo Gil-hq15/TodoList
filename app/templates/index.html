@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+<p id="profile" style="position: absolute; margin-left: 100px;">Hi {{username}}!</p>
 <div class="content">
     <a id="logout" href="/">Log Out</a>
     <h1 style="text-align: center">Task Master</h1>
@@ -34,6 +35,7 @@
     {% endif %}
 
     <div class="form">
+        <p id="error" style="color: red; font-size: 0.8rem; text-align: center;">{{ error }}</p>
         <form action="/index" method="POST">
             <input type="text" name="content" id="content">
             <select id="priority" name="priority">
