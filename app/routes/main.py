@@ -45,7 +45,12 @@ def index():
         task_priority = request.form['priority']
         if len(task_content)==0:
             tasks = Todo.query.filter_by(user_id=session['user_id']).order_by(Todo.date_created).all()
-            return render_template('index.html', username=User.query.get(session['user_id']).username, tasks=tasks, error='Task with no content.')
+            return render_template('index.html', username=User.query.get(session['user_id']).username, tasks=tasks, error='Task with no content.'), 200
+        
+        allowed_priorities = ['High', 'Medium', 'Low']
+        if task_priority not in allowed_priorities:
+            tasks = Todo.query.filter_by(user_id=session['user_id']).order_by(Todo.date_created).all()
+            return render_template('index.html', username=User.query.get(session['user_id']).username, tasks=tasks, error='Invalid priority.'), 200
         new_task = Todo(content=task_content, priority=task_priority, user_id=session['user_id'])
 
         try:

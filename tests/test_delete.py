@@ -1,7 +1,6 @@
 import pytest
 from app import create_app, db
 from app.models import Todo, User
-from flask import url_for
 
 @pytest.fixture
 def client():
@@ -14,13 +13,13 @@ def client():
             db.drop_all()
 
 def test_delete_task_valid_id(client):
-    user = User(username='testuser', email='test@example.com')
+    user = User(username='testuser')
     user.set_password('password')
     db.session.add(user)
     db.session.commit()
     client.post('/login', data={'username': 'testuser', 'password': 'password'})
     
-    task = Todo(content='Test task', user_id=user.id)
+    task = Todo(content='Test task', priority='High', user_id=user.id)
     db.session.add(task)
     db.session.commit()
 
