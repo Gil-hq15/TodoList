@@ -24,4 +24,4 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest --tb=short --disable-warnings --cov=app --cov-report=html
+          pytest --tb=short --disable-warnings
