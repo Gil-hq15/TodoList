@@ -15,7 +15,7 @@ def login():
             session['user_id'] = user.id
             return redirect('/index')
         else:
-            return render_template('login.html', oauth_login_url=url_for('main.oauth_login'), error='Invalid username or password. Try again.')
+            return render_template('login.html', oauth_login_url=url_for('main.oauth_login'), error='Invalid username or password. Try again.'), 200
     return render_template('login.html', oauth_login_url=url_for('main.oauth_login'))
 
 @main_blueprint.route('/register', methods=['GET', 'POST'])
@@ -25,9 +25,9 @@ def register():
         password = request.form['password']
         password_confirm = request.form['password1']
         if password != password_confirm:
-            return render_template('register.html', error='The passwords do not match. Please try again.')
+            return render_template('register.html', error='The passwords do not match. Please try again.'), 200
         if User.query.filter_by(username=username).first():
-            return render_template('register.html', error='Username already exists.')
+            return render_template('register.html', error='Username already exists.'), 200
         new_user = User(username=username)
         new_user.set_password(password)
         db.session.add(new_user)
@@ -115,7 +115,8 @@ def oauth_callback():
 
         user = User.query.filter_by(username=user_info['name']).first()
         if not user:
-            user = User(username=user_info['name'], password_hashed='oauth') 
+            user = User(username=user_info['name']) 
+            user.set_password('oauth')
             db.session.add(user)
             db.session.commit()
 
