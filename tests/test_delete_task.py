@@ -17,7 +17,7 @@ def test_delete_task_valid_id(client):
     user.set_password('password')
     db.session.add(user)
     db.session.commit()
-    client.post('/login', data={'username': 'testuser', 'password': 'password'})
+    client.post('/', data={'username': 'testuser', 'password': 'password'})
     
     task = Todo(content='Test task', priority='High', user_id=user.id)
     db.session.add(task)
@@ -29,7 +29,7 @@ def test_delete_task_valid_id(client):
     assert deleted_task is None  
 
 def test_delete_task_invalid_id(client):
-    client.post('/login', data={'username': 'testuser', 'password': 'password'})
+    client.post('/', data={'username': 'testuser', 'password': 'password'})
     
     response = client.get('/delete/9999')  
     assert response.status_code == 404  
