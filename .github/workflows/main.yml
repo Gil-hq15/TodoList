@@ -34,8 +34,4 @@ jobs:
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           GOOGLE_DISCOVERY_URL: ${{ secrets.GOOGLE_DISCOVERY_URL }}
         run: |
-<<<<<<< HEAD
           pytest --cov=app --tb=short --disable-warnings
-=======
-          pytest --cov=app --cov-report=html
->>>>>>> ac696ff08843a2c47590130c0d02befcb563aed7
