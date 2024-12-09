@@ -8,16 +8,6 @@ from app.models import Todo, User
 from flask import url_for, session
 
 
-@pytest.fixture
-def client():
-    app = create_app('testing')
-    with app.test_client() as client:
-        with app.app_context():
-            db.create_all()
-            yield client
-            db.session.remove()
-            db.drop_all()
-
 def test_login(client):
     # Create a user
     user = User(username='testuser')

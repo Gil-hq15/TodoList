@@ -6,15 +6,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app import create_app, db
 from app.models import User
 
-@pytest.fixture
-def client():
-    app = create_app('testing')
-    with app.test_client() as client:
-        with app.app_context():
-            db.create_all()
-            yield client
-            db.session.remove()
-            db.drop_all()
 
 def test_oauth_login(client):
     # Mock user info returned by Google's OAuth service
