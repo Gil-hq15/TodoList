@@ -1,7 +1,10 @@
-from flask import Blueprint, render_template, request, redirect, session, url_for
-from app import oauth, db
+from flask import Blueprint, render_template, request, redirect, session, url_for, current_app
+from app import oauth, db, Config
 from app.models import Todo, User, db
 import secrets
+import requests
+import random
+from datetime import datetime, timedelta
 
 main_blueprint = Blueprint('main', __name__)
 
@@ -13,6 +16,24 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and user.check_password(password):
             session['user_id'] = user.id
+
+            nasa_api_key = current_app.config['NASA_API_KEY']
+            random_date = generate_random_date()
+            response = requests.get(
+                'https://api.nasa.gov/planetary/apod',
+                params={'api_key': nasa_api_key, 'date': random_date}
+            )
+            if response.status_code == 200:
+                nasa_data = response.json()
+                session['nasa_apod'] = {
+                    'date': nasa_data['date'],
+                    'title': nasa_data['title'],
+                    'image_url': nasa_data['url'],
+                    'explanation': nasa_data['explanation']
+                }
+            else:
+                session['nasa_apod'] = {'error': 'Failed to fetch NASA APOD.'}
+
             return redirect('/index')
         else:
             return render_template('login.html', oauth_login_url=url_for('main.oauth_login'), error='Invalid username or password. Try again.'), 200
@@ -121,6 +142,23 @@ def oauth_callback():
             db.session.commit()
 
         session['user_id'] = user.id
+
+        nasa_api_key = current_app.config['NASA_API_KEY']
+        random_date = generate_random_date()
+        response = requests.get(
+            'https://api.nasa.gov/planetary/apod',
+            params={'api_key': nasa_api_key, 'date': random_date}
+        )
+        if response.status_code == 200:
+            nasa_data = response.json()
+            session['nasa_apod'] = {
+                'date': nasa_data['date'],
+                'title': nasa_data['title'],
+                'image_url': nasa_data['url'],
+                'explanation': nasa_data['explanation']
+            }
+        else:
+            session['nasa_apod'] = {'error': 'Failed to fetch NASA APOD.'}
         return redirect('/index')
 
     except Exception as e:
@@ -130,3 +168,10 @@ def oauth_callback():
 def logout():
     session.pop('user_id', None)
     return redirect('/')
+
+def generate_random_date():
+    """Generate a random date within the range of the NASA APOD API (June 16, 1995 - today)."""
+    start_date = datetime(1995, 6, 16)
+    end_date = datetime.now()
+    random_date = start_date + timedelta(days=random.randint(0, (end_date - start_date).days))
+    return random_date.strftime('%Y-%m-%d')

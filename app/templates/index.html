@@ -47,4 +47,16 @@
         </form>
     </div>
 </div>
+    {% if session.get('nasa_apod') %}
+        <div class="nasa-apod" style="margin-top: 60px; margin-left: 150px; margin-right: 150px; text-align: center;">
+            {% if session['nasa_apod'].get('error') %}
+                <p>{{ session['nasa_apod']['error'] }}</p>
+            {% else %}
+                <h2>Astronomy Picture of the Day</h2>
+                <p><strong>{{ session['nasa_apod']['title'] }}</strong><br>({{ session['nasa_apod']['date'] }})</p>
+                <img src="{{ session['nasa_apod']['image_url'] }}" alt="NASA APOD" style="width: 700px; height: auto;">
+                <p style="font-size: 12px;">{{ session['nasa_apod']['explanation'] }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
 {% endblock %}

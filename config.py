@@ -15,6 +15,9 @@ class Config:
     GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
     GOOGLE_DISCOVERY_URL = os.getenv('GOOGLE_DISCOVERY_URL')
 
+    NASA_API_KEY = os.getenv('NASA_API_KEY')
+
+
 
 class DevelopmentConfig(Config):
     """Development configuration."""
