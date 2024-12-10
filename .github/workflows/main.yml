@@ -13,6 +13,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Install missing dependencies for Playwright
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwoff2dec1 \
+            libvpx6 \
+            libevent-2.1-7 \
+            libopus0 \
+            libgstreamer-plugins-base1.0-0 \
+            libgstreamer1.0-0 \
+            libflite1 \
+            libavif13 \
+            libharfbuzz-icu0 \
+            libhyphen0 \
+            libmanette0 \
+            libgles2-mesa \
+            libx264-155
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
