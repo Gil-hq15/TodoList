@@ -5,14 +5,17 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app import create_app, db
 from app.models import User
 from flask import current_app
+from dotenv import load_dotenv
+
+load_dotenv()  
 
 
 def test_user_registration(client, browser):
     page = browser.new_page()
-    URL = current_app.config['URL']
+    url = os.getenv('URL')
 
     # Navigate to the registration page
-    page.goto(URL + "/register")
+    page.goto(url + "/register")
     
     # Fill out the registration form
     page.fill("input[name='username']", "test-user")
@@ -21,7 +24,7 @@ def test_user_registration(client, browser):
     page.click("button:has-text('Create Account')")
     
     # Assert that we are redirected to the login page
-    assert page.url == URL + "/"
+    assert page.url == url + "/"
 
     # Clean up: Remove the user created during the test
     with client.application.app_context():
