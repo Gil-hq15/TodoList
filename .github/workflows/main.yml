@@ -17,8 +17,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            libwoff2dec1 \
-            libvpx6 \
+            libwoff2-2 \
+            libvpx5 \
             libevent-2.1-7 \
             libopus0 \
             libgstreamer-plugins-base1.0-0 \
@@ -27,9 +27,9 @@ jobs:
             libavif13 \
             libharfbuzz-icu0 \
             libhyphen0 \
-            libmanette0 \
+            libmanette-0.2-0 \
             libgles2-mesa \
-            libx264-155
+            libx264-160
 
       - name: Set up Python
         uses: actions/setup-python@v4
