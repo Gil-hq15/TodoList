@@ -19,6 +19,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          npm init -y
           if [ -e yarn.lock ]; then
           yarn install --frozen-lockfile
           elif [ -e package-lock.json ]; then
