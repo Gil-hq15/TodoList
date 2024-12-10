@@ -9,7 +9,7 @@ from playwright.sync_api import sync_playwright
 
 @pytest.fixture
 def client():
-    app = create_app('testing')
+    app = create_app('production')
     with app.test_client() as client:
         with app.app_context():
             db.create_all()
