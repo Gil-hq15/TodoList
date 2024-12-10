@@ -15,11 +15,6 @@ def test_user_registration(client, browser, request):
 
     # Navigate to the registration page
     page.goto(URL + "/register")
-    
-    with client.application.app_context():
-        db.session.remove()
-        db.drop_all()
-        db.create_all()
 
     # Fill out the registration form
     page.fill("input[name='username']", "test-user" + browser_name)
