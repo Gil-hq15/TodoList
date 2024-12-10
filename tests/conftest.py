@@ -17,13 +17,6 @@ def client():
             db.session.remove()
             db.drop_all()
 
-"""@pytest.fixture(scope="function")
-def browser():
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=True)
-        yield browser
-        browser.close()"""
-
 @pytest.fixture(scope="function", params=["chromium", "firefox", "webkit"])
 def browser(request):
     with sync_playwright() as playwright:
