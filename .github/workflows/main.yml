@@ -57,7 +57,9 @@ jobs:
           sleep 5  # Wait for the server to start
 
       - name: Run tests
-        run: pytest -n 1 --cov=app --tb=short --disable-warnings tests/acceptance
+        run: |
+          pytest --cov=app --tb=short --disable-warnings tests/acceptance/test_task_creation_acceptance.py
+          pytest --cov=app --tb=short --disable-warnings tests/acceptance/test_user_registration_acceptance.py
 
   unit-testing:
     runs-on: ubuntu-latest
