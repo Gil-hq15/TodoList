@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app.models import User, Todo
 from app import create_app, db
-from flask import url_for, session
+from flask import url_for, session, current_app
 from playwright.sync_api import sync_playwright
 
 @pytest.fixture
@@ -23,3 +23,11 @@ def browser(request):
         browser = getattr(playwright, request.param).launch(headless=True)
         yield browser
         browser.close()
+
+@pytest.fixture(autouse=True)
+def setup_and_teardown():
+    with current_app.app_context():
+        db.session.remove()
+        db.drop_all()
+        db.create_all()
+        yield
