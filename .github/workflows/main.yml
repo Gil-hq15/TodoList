@@ -57,6 +57,16 @@ jobs:
           sleep 5  # Wait for the server to start
 
       - name: Run tests
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }} 
+          DEV_DATABASE_URL: ${{ secrets.DEV_DATABASE_URL }}
+          TEST_DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
+          PROD_DATABASE_URL: ${{ secrets.PROD_DATABASE_URL }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_DISCOVERY_URL: ${{ secrets.GOOGLE_DISCOVERY_URL }}
+          URL: ${{ secrets.URL }}
         run: |
           pytest --cov=app --tb=short --disable-warnings tests/acceptance/test_task_creation_acceptance.py
           pytest --cov=app --tb=short --disable-warnings tests/acceptance/test_user_registration_acceptance.py
