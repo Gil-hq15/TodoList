@@ -51,5 +51,6 @@ jobs:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           GOOGLE_DISCOVERY_URL: ${{ secrets.GOOGLE_DISCOVERY_URL }}
+          URL: ${{ secrets.URL }}
         run: |
           pytest --cov=app --tb=short --disable-warnings

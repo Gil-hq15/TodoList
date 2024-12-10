@@ -5,16 +5,14 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app import create_app, db
 from app.models import User
 from flask import current_app
-from dotenv import load_dotenv
-load_dotenv()  
+
 
 def test_user_registration(client, browser):
     page = browser.new_page()
-    URL = os.getenv('URL')
-    strURL = str(URL)+"/register"
+    URL = current_app.config['URL']
 
     # Navigate to the registration page
-    page.goto(strURL)
+    page.goto(str(URL) + "/register")
     
     # Fill out the registration form
     page.fill("input[name='username']", "test-user")
