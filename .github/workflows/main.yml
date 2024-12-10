@@ -19,8 +19,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install --package-lock-only
+          if [ -e yarn.lock ]; then
+          yarn install --frozen-lockfile
+          elif [ -e package-lock.json ]; then
           npm ci
+          else
+          npm i
+          fi
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
