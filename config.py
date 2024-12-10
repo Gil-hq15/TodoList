@@ -17,6 +17,8 @@ class Config:
 
     NASA_API_KEY = os.getenv('NASA_API_KEY')
 
+    URL = os.getenv('URL')
+
 
 
 class DevelopmentConfig(Config):

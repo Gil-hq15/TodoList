@@ -1,9 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, session, url_for, current_app
-from app import oauth, db, Config
-from app.models import Todo, User, db
 import secrets
 import requests
 import random
+from flask import Blueprint, render_template, request, redirect, session, url_for, current_app
+from app import oauth, db, Config
+from app.models import Todo, User, db
 from datetime import datetime, timedelta
 
 main_blueprint = Blueprint('main', __name__)
