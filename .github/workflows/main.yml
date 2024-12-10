@@ -53,4 +53,6 @@ jobs:
           GOOGLE_DISCOVERY_URL: ${{ secrets.GOOGLE_DISCOVERY_URL }}
           URL: ${{ secrets.URL }}
         run: |
+          nohup python -m flask run --host=0.0.0.0 --port=5000 &
+          sleep 5  # Wait for the server to start
           pytest --cov=app --tb=short --disable-warnings

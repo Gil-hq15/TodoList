@@ -4,13 +4,15 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app import create_app, db
 from app.models import User
+from flask import current_app
 
 
 def test_task_creation(client, browser):
     page = browser.new_page()
 
+    URL = current_app.config['URL']
     # Navigate to the registration page
-    page.goto("http://127.0.0.1:5000/register")
+    page.goto(URL + "/register")
     
     # Fill out the registration form
     page.fill("input[name='username']", "test-user")
