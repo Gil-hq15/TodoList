@@ -13,12 +13,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install missing dependencies for Playwright
+      - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            libwoff2-2 \
-            libvpx5 \
+            libwoff2-1 \
+            libvpx-dev \
             libevent-2.1-7 \
             libopus0 \
             libgstreamer-plugins-base1.0-0 \
@@ -29,7 +29,12 @@ jobs:
             libhyphen0 \
             libmanette-0.2-0 \
             libgles2-mesa \
-            libx264-160
+            libx264-dev
+
+      - name: Install Playwright and dependencies
+        run: |
+          npm install playwright
+          npx playwright install
 
       - name: Set up Python
         uses: actions/setup-python@v4
