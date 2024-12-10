@@ -16,7 +16,7 @@ Run unit and integration tests using pytest to validate core functionalities lik
 Use Locust to simulate multiple users performing operations and evaluate application performance:
 
 1. Ensure the app is running locally.
-2. Run Locust:
+2. Set virtual environment for locust dependencies, and run Locust:
 
     ```bash
     python3 -m venv locust-env

@@ -6,4 +6,5 @@ nav:
   - Structure: structure.md
   - Features: features.md
   - Installation: installation.md
+  - Testing: testing.md
   - API: api.md

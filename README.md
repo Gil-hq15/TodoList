@@ -82,15 +82,7 @@ The **To-Do List App** is a feature-rich web application developed with Flask. I
    - Rename `.env.example` to `.env`.
    - Fill in the required variables like `SECRET_KEY`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and `NASA_API_KEY`.
 
-5. **Initialize the database:**
-
-    ```bash
-    flask db init
-    flask db migrate -m "Initial migration"
-    flask db upgrade
-    ```
-
-6. **Run the application:**
+5. **Run the application:**
 
     ```bash
     flask run
