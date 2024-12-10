@@ -10,9 +10,10 @@ from flask import current_app
 def test_user_registration(client, browser):
     page = browser.new_page()
     URL = current_app.config['URL']
+    strURL = str(URL)+"/register"
 
     # Navigate to the registration page
-    page.goto(str(URL) + "/register")
+    page.goto(strURL)
     
     # Fill out the registration form
     page.fill("input[name='username']", "test-user")
