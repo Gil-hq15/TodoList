@@ -7,7 +7,8 @@ from app.models import User
 from flask import current_app
 
 
-def test_task_creation(client, browser):
+def test_task_creation(client, browser, request):
+    browser_name = request.node.callspec.params["browser"]
     context = browser.new_context()
     page = context.new_page()
 
@@ -19,15 +20,15 @@ def test_task_creation(client, browser):
         db.session.remove()
         db.drop_all()
         db.create_all()
-        
+
     # Fill out the registration form
-    page.fill("input[name='username']", "test-user")
+    page.fill("input[name='username']", "test-user-" + browser_name)
     page.fill("input[name='password']", "testpassword")
     page.fill("input[name='password1']", "testpassword")
     page.click("button:has-text('Create Account')")
 
     # Log in as a test user
-    page.fill("input[name='username']", "test-user")
+    page.fill("input[name='username']", "test-user-" + browser_name)
     page.fill("input[name='password']", "testpassword")
     page.click("button:has-text('Log In')")
 
@@ -40,7 +41,7 @@ def test_task_creation(client, browser):
 
     # Clean up: Remove the user created during the test
     with client.application.app_context():
-        user = User.query.filter_by(username="test-user").first()
+        user = User.query.filter_by(username="test-user-" + browser_name).first()
         if user:
             db.session.delete(user)
             db.session.commit()

@@ -23,11 +23,3 @@ def browser(request):
         browser = getattr(playwright, request.param).launch(headless=True)
         yield browser
         browser.close()
-
-@pytest.fixture(autouse=True)
-def setup_and_teardown():
-    with current_app.app_context():
-        db.session.remove()
-        db.drop_all()
-        db.create_all()
-        yield
