@@ -8,6 +8,7 @@ from flask import current_app
 
 
 def test_user_registration(client, browser):
+    context = browser.new_context()
     page = browser.new_page()
     URL = current_app.config['URL']
 

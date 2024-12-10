@@ -8,7 +8,8 @@ from flask import current_app
 
 
 def test_task_creation(client, browser):
-    page = browser.new_page()
+    context = browser.new_context()
+    page = context.new_page()
 
     URL = current_app.config['URL']
     # Navigate to the registration page
