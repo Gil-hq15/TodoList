@@ -14,7 +14,7 @@ def test_user_registration(client, browser):
     page = browser.new_page()
     url = os.getenv('URL')
 
-    # Navigate to the registration page
+    # Navigate to the registration page 
     page.goto(url + "/register")
     
     # Fill out the registration form
