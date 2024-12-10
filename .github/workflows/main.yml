@@ -14,27 +14,13 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libwoff2-1 \
-            libvpx-dev \
-            libevent-2.1-7 \
-            libopus0 \
-            libgstreamer-plugins-base1.0-0 \
-            libgstreamer1.0-0 \
-            libflite1 \
-            libavif13 \
-            libharfbuzz-icu0 \
-            libhyphen0 \
-            libmanette-0.2-0 \
-            libgles2-mesa \
-            libx264-dev
+        run: npm ci
 
-      - name: Install Playwright and dependencies
-        run: |
-          npm install playwright
-          npx playwright install
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+        
+      - name: Run Playwright tests
+        run: npx playwright test
 
       - name: Set up Python
         uses: actions/setup-python@v4
