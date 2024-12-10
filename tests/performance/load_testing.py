@@ -11,7 +11,20 @@ class ToDoUser(HttpUser):
     wait_time = between(1, 3)  # Wait time between tasks (in seconds)
 
     def on_start(self):
-        """Simulate a login to the app."""
+        """
+            Simulates a login to the app by performing OAuth authentication.
+
+            This method is called when the user starts the test. It attempts to log in using the OAuth login flow.
+            - Calls the `login()` method to perform the login.
+            - If the login is successful, stores the user ID and fetches the task IDs using the `get_task_ids()` method.
+            - If the login fails, the test is stopped by raising a `StopUser` exception.
+
+            Args:
+                None.
+
+            Returns:
+                None. If login fails, the user is stopped from continuing the test.
+        """
         # Perform OAuth login
         login_data = self.login()
         if login_data['status'] == 'ok':
@@ -21,7 +34,22 @@ class ToDoUser(HttpUser):
             raise StopUser("Login failed, stopping user")
 
     def login(self):
-        """Perform OAuth login by simulating a GET request to the /oauth-login route"""
+        """
+            Simulates OAuth login by making a GET request to the /oauth-login route.
+
+            This method performs the OAuth login flow, where a mock user is simulated.
+            - Makes a GET request to `/oauth-login`.
+            - Upon successful login (status code 200), simulates a callback using mock user data and makes a GET request to `/oauth-callback`.
+            - If successful, returns a dictionary with the status 'ok' and a mock user ID.
+
+            Args:
+                None.
+
+            Returns:
+                dict: A dictionary with the login status and user ID.
+                    - If login is successful, returns {'status': 'ok', 'user_id': 'mock_user_id'}.
+                    - Otherwise, returns {'status': 'fail'}.
+        """
         with self.client.get("/oauth-login", catch_response=True) as response:
             if response.status_code == 200:
                 # Simulate a successful callback with mock user data
@@ -38,7 +66,22 @@ class ToDoUser(HttpUser):
 
 
     def get_task_ids(self):
-        """Fetch task IDs by parsing the HTML response"""
+        """
+            Fetches task IDs from the /index route by parsing the HTML response.
+
+            This method is used to retrieve the IDs of the tasks displayed on the index page.
+            - Makes a GET request to `/index` to load the tasks.
+            - Uses a regular expression to extract task IDs from the HTML response.
+            - Returns a list of task IDs as integers.
+
+            Args:
+                None.
+
+            Returns:
+                list: A list of integers representing the task IDs extracted from the response.
+                    - If the request fails, returns an empty list.
+        """
+
         with self.client.get("/index", catch_response=True) as response:
             if response.status_code == 200:
                 # Use regex to find task IDs in the HTML table
@@ -49,7 +92,20 @@ class ToDoUser(HttpUser):
 
     @task
     def create_task(self):
-        """Simulate task creation"""
+        """
+            Simulates the creation of a new task by sending a POST request to the /index route.
+
+            This method creates a new task with random content and priority.
+            - Makes a POST request to `/index` to create a new task.
+            - After the task is created successfully, updates the local list of task IDs.
+
+            Args:
+                None.
+
+            Returns:
+                None. If the task is successfully created, the task IDs are updated. If the creation fails, it logs the failure.
+        """
+
         task_data = {
             "content": f"Task {random.randint(1, 1000)}",
             "priority": random.choice(["High", "Medium", "Low"])
@@ -64,6 +120,20 @@ class ToDoUser(HttpUser):
 
     @task
     def delete_task(self):
+        """
+            Simulates task deletion by sending a GET request to the /delete/<task_id> route.
+
+            This method deletes a task with a random ID from the list of available task IDs.
+            - If there are no tasks to delete (i.e., the task list is empty), it creates a task first by calling the `create_task()` method.
+            - Once tasks are available, it randomly selects a task and sends a DELETE request to remove the task.
+            - The task ID is removed from the local task list after a successful deletion.
+
+            Args:
+                None.
+
+            Returns:
+                None. If task deletion is successful, the task ID is removed from the list. If it fails, an appropriate error message is logged.
+        """
         if not self.task_ids:  # Check if there are any tasks to delete
             print("No tasks available to delete, creating a task first...")
             self.create_task()  # Create a task to ensure task_ids is populated

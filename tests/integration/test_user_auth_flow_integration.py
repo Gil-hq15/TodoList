@@ -8,6 +8,22 @@ from flask import url_for, session
 
 @pytest.mark.integration
 def test_user_authentication_flow(client):
+    """
+        Test user authentication workflow, including registration and login.
+
+        This function verifies the user authentication flow:
+        - User registration with valid credentials.
+        - Login functionality for the newly registered user.
+
+        Args:
+            client: Flask testing client instance.
+
+        Returns:
+            None. The test asserts that:
+            - A user is successfully registered, and a redirect to the login page occurs.
+            - The registered user exists in the database.
+            - The user can log in successfully, with a redirect to the index page.
+    """
     # Test user registration
     response = client.post('/register', data={
         'username': 'newuser',

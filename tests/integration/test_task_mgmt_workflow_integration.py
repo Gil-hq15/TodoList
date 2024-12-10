@@ -8,6 +8,23 @@ from flask import url_for, session
 
 @pytest.mark.integration
 def test_task_management_workflow(client):
+    """
+        Test task management workflow, including creation, updating, and deletion of tasks.
+
+        This function verifies the full workflow for managing tasks:
+        - Task creation with valid input.
+        - Task updating to modify content and priority.
+        - Task deletion and validation of its removal from the database.
+
+        Args:
+            client: Flask testing client instance.
+
+        Returns:
+            None. The test asserts that:
+            - A task is successfully created and saved in the database.
+            - The task is updated with new content and priority values.
+            - The task is deleted and no longer exists in the database.
+    """
     # Create and log in a user
     user = User(username='taskuser')
     user.set_password('hashed_password')

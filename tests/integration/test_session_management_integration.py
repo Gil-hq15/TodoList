@@ -9,6 +9,21 @@ from flask import url_for, session
 
 @pytest.mark.integration
 def test_session_management(client):
+    """
+        Test session management for user login and logout.
+
+        This function verifies that user sessions are correctly managed during login and logout:
+        - A session is created with the correct user ID upon successful login.
+        - The session is cleared upon logout.
+
+        Args:
+            client: Flask testing client instance.
+
+        Returns:
+            None. The test asserts that:
+            - The session contains the correct `user_id` after login.
+            - The session no longer contains `user_id` after logout.
+    """
     # Log in a user
     user = User(username='sessionuser')
     user.set_password('hashed_password')

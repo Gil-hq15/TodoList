@@ -8,6 +8,25 @@ from app.models import User
 
 
 def test_oauth_login(client):
+    """
+        Test OAuth login functionality with Google OAuth service.
+
+        This function simulates the OAuth login process with Google's OAuth service:
+        - Mocks the user information returned by the OAuth service (Google).
+        - Patches the functions responsible for authorizing and parsing the OAuth tokens.
+        - Simulates the OAuth callback and verifies the user is created in the database.
+        - Checks if the user is redirected to the index page and the session contains the correct `user_id`.
+
+        Args:
+            client: Flask testing client instance.
+
+        Returns:
+            None. The test asserts that:
+            - The response status is a redirect (302) to the index page.
+            - A new user is created in the database with the correct username.
+            - The session contains the correct `user_id` after successful login.
+            - The user's password is not stored in plain text.
+    """
     # Mock user info returned by Google's OAuth service
     mock_user_info = {
         'sub': 'google-unique-id',

@@ -9,6 +9,23 @@ from flask import url_for, session
 
 
 def test_login(client):
+    """
+        Test user login functionality.
+
+        This function verifies that a user can successfully log in with valid credentials:
+        - Creates a user and stores their credentials in the database.
+        - Sends a login request with the correct username and password.
+        - Verifies that the user is redirected upon successful login.
+        - Ensures the session contains the correct `user_id` after login.
+
+        Args:
+            client: Flask testing client instance.
+
+        Returns:
+            None. The test asserts that:
+            - The login request returns a status code of 302 (indicating a successful redirect).
+            - The session contains the correct `user_id` for the logged-in user.
+    """
     # Create a user
     user = User(username='testuser')
     user.set_password(password='password')
@@ -25,6 +42,23 @@ def test_login(client):
 
 
 def test_login_validation(client):
+    """
+        Test user login validation with missing or empty credentials.
+
+        This function ensures that login validation works properly by handling invalid inputs:
+        - Case 1: Missing username.
+        - Case 2: Missing password.
+        - Case 3: Both fields empty.
+        - For each case, the response should return a status code of 200, indicating an error message is displayed.
+
+        Args:
+            client: Flask testing client instance.
+
+        Returns:
+            None. The test asserts that:
+            - Each invalid login attempt results in a 200 status code (no redirect).
+            - The appropriate error message or validation feedback is shown for each case.
+    """
     # Case 1: Missing username
     response = client.post('/', data={'username': '', 'password': 'password'})
     assert response.status_code == 200  # No redirect, show error

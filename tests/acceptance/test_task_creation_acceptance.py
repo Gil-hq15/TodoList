@@ -8,6 +8,26 @@ from flask import current_app
 
 
 def test_task_creation(client, browser, request):
+    """
+        Test task creation workflow using a browser.
+
+        This function tests the end-to-end task creation process, including:
+        - User registration.
+        - User login.
+        - Task creation with valid input.
+        - Validation that the created task appears on the user's page.
+
+        Args:
+            client: Flask testing client instance.
+            browser: Browser automation instance (e.g., Playwright browser context).
+            request: Test request object to access parameterized data (e.g., browser name).
+
+        Returns:
+            None. The test asserts that:
+            - The created task is visible on the page after submission.
+            - User and task workflows function as expected.
+            - Test data is cleaned up by removing the created user from the database.
+    """
     browser_name = request.node.callspec.params["browser"]
     context = browser.new_context()
     page = context.new_page()

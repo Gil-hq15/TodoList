@@ -8,6 +8,23 @@ from flask import current_app
 
 
 def test_user_registration(client, browser, request):
+    """
+        Test user registration workflow using a browser.
+
+        This function verifies that the user registration process works as expected,
+        including filling out the registration form and checking that the user is
+        redirected to the login page upon successful registration.
+
+        Args:
+            client: Flask testing client instance.
+            browser: Browser automation instance (e.g., Playwright browser context).
+            request: Test request object to access parameterized data (e.g., browser name).
+
+        Returns:
+            None. The test asserts that:
+            - The user is redirected to the login page ("/") after successful registration.
+            - Test data is cleaned up by removing the created user from the database.
+    """
     browser_name = request.node.callspec.params["browser"]
     context = browser.new_context()
     page = context.new_page()
