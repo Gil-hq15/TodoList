@@ -121,6 +121,9 @@ Use Locust to simulate multiple users performing operations and evaluate applica
 2. Run Locust:
 
     ```bash
+    python3 -m venv locust-env
+    source locust-env/bin/activate
+    pip install -r load_requirements.txt
     locust -f tests/performance/load_testing.py
     ```
 
