@@ -1,0 +1,9 @@
+site_name: To-Do List App Documentation
+site_url: https://todolist-gil.onrender.com/docs/
+theme:
+  name: mkdocs
+nav:
+  - Home: index.md
+  - Features: features.md
+  - Installation: installation.md
+  - API: api.md
