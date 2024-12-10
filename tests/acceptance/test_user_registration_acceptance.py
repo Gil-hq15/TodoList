@@ -12,7 +12,7 @@ def test_user_registration(client, browser):
     URL = current_app.config['URL']
 
     # Navigate to the registration page
-    page.goto(URL + "/register")
+    page.goto(str(URL) + "/register")
     
     # Fill out the registration form
     page.fill("input[name='username']", "test-user")
@@ -21,7 +21,7 @@ def test_user_registration(client, browser):
     page.click("button:has-text('Create Account')")
     
     # Assert that we are redirected to the login page
-    assert page.url == URL + "/"
+    assert page.url == str(URL) + "/"
 
     # Clean up: Remove the user created during the test
     with client.application.app_context():
