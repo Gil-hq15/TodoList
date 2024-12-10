@@ -11,7 +11,7 @@ def test_task_creation(client, browser):
 
     URL = current_app.config['URL']
     # Navigate to the registration page
-    page.goto(str(URL) + "/register")
+    page.goto(URL + "/register")
     
     # Fill out the registration form
     page.fill("input[name='username']", "test-user")
