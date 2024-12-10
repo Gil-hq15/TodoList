@@ -42,7 +42,7 @@ The **To-Do List App** is a feature-rich web application developed with Flask. I
 
 ---
 
-## 🛠️ **Project Structure**
+## 🛠️ **Instalation**
 
 ### Prerequisites
 - Python 3.8 or higher.

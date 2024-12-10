@@ -1,6 +1,6 @@
-# API Integration
+## 🚀 API Integration: NASA APOD
 
-The To-Do List App integrates with the NASA Astronomy Picture of the Day API to provide space images.
+Upon successful login, the app fetches the Astronomy Picture of the Day (APOD) using the NASA APOD API. This feature demonstrates how external APIs can enrich user experiences.
 
 ## Endpoint
 
